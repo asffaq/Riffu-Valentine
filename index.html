@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Be My Valentine?</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      max-width: 360px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #e63946;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 80px;
+      margin-top: 10px;
+    }
+
+    button {
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.2s;
+    }
+
+    #yesBtn {
+      padding: 15px 35px;
+      background-color: #e63946;
+      color: white;
+      font-size: 18px;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.05);
+    }
+
+    #noBtn {
+      position: absolute;
+      padding: 8px 16px;
+      background-color: #adb5bd;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .shy-note {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #6c757d;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Will you be my Valentine? 💖</h1>
+
+    <!-- Replace us.jpg with your photo -->
+    <img src="us.jpg" alt="Us together">
+
+    <div class="buttons">
+      <button id="yesBtn" onclick="sayYes()">YES 💕</button>
+      <button id="noBtn">No</button>
+    </div>
+
+    <p class="shy-note">No seems to be a little shy 🫢</p>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    });
+
+    function sayYes() {
+      document.body.innerHTML = `
+        <div style="
+          height:100vh;
+          display:flex;
+          flex-direction:column;
+          justify-content:center;
+          align-items:center;
+          font-family:'Segoe UI', sans-serif;
+          background:linear-gradient(135deg, #ff9a9e, #fad0c4);
+          text-align:center;
+          padding:20px;
+        ">
+          <img 
+            src="fireworks.gif"
+            alt="Fireworks"
+            style="
+              max-width:300px;
+              width:80%;
+              margin-bottom:20px;
+              border-radius:15px;
+            "
+          >
+
+          <h1 style="color:#e63946;">
+            Yay! 🎉<br>
+            See you soon ❤️
+          </h1>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>
