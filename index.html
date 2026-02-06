@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>14th Feb Date?</title>
 
-  <!-- Prevent iOS zoom weirdness -->
+  <!-- iOS Safari viewport safety -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   <style>
@@ -132,7 +132,7 @@
       noBtn.style.top = `${y}px`;
     }
 
-    // Desktop
+    // Desktop hover
     noBtn.addEventListener("mouseenter", moveNoButton);
 
     // iOS / touch
@@ -144,7 +144,7 @@
     // Backup
     noBtn.addEventListener("click", moveNoButton);
 
-    // YES button
+    // YES button logic (with iOS GIF fix)
     yesBtn.addEventListener("click", () => {
       document.body.innerHTML = `
         <div class="fade-in" style="
@@ -171,13 +171,13 @@
               width:100%;
               height:100%;
               object-fit:contain;
-              opacity:0.15;
+              opacity:0.22;
               filter: blur(1px);
             "
           >
 
-          <!-- Foreground -->
-          <div style="
+          <!-- Foreground container -->
+          <div id="celebrate" style="
             position:relative;
             z-index:2;
             display:flex;
@@ -187,18 +187,7 @@
             max-width:420px;
             width:100%;
           ">
-            <img 
-              src="fireworks.gif"
-              alt="Fireworks"
-              style="
-                max-width:260px;
-                width:80%;
-                margin-bottom:20px;
-                border-radius:15px;
-              "
-            >
-
-            <h1 style="color:#e63946;">
+            <h1 style="color:#e63946; margin-bottom:20px;">
               Yay! 🎉<br>
               See you soon ❤️
             </h1>
@@ -206,6 +195,18 @@
 
         </div>
       `;
+
+      // 🔥 iOS Safari–safe animated GIF injection
+      const fireworks = document.createElement("img");
+      fireworks.src = "fireworks.gif?" + new Date().getTime(); // cache-buster
+      fireworks.alt = "Fireworks";
+      fireworks.style.maxWidth = "260px";
+      fireworks.style.width = "80%";
+      fireworks.style.marginBottom = "20px";
+      fireworks.style.borderRadius = "15px";
+
+      const container = document.getElementById("celebrate");
+      container.prepend(fireworks);
     });
   </script>
 
