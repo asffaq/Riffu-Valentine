@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Be My Valentine?</title>
+  <title>14th Feb Date?</title>
+
+  <!-- Prevent iOS zoom weirdness -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   <style>
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100svh;
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       display: flex;
       justify-content: center;
@@ -18,11 +21,12 @@
 
     .container {
       text-align: center;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       padding: 30px 40px;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
       max-width: 360px;
+      width: 90%;
     }
 
     h1 {
@@ -30,7 +34,7 @@
       color: #e63946;
     }
 
-    img {
+    .main-img {
       width: 100%;
       border-radius: 15px;
       margin-bottom: 20px;
@@ -38,7 +42,7 @@
 
     .buttons {
       position: relative;
-      height: 80px;
+      height: 90px;
       margin-top: 10px;
     }
 
@@ -50,10 +54,11 @@
     }
 
     #yesBtn {
-      padding: 15px 35px;
+      padding: 15px 38px;
       background-color: #e63946;
       color: white;
       font-size: 18px;
+      transition: transform 0.2s;
     }
 
     #yesBtn:hover {
@@ -75,15 +80,31 @@
       color: #6c757d;
       font-style: italic;
     }
+
+    /* Fade-in animation */
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
-    <h1>Will you be my Valentine? 💖</h1>
+  <div class="container fade-in">
+    <h1>Will you be my 14th Feb Date? 💖</h1>
 
-    <img src="us.jpg" alt="Us together">
+    <img src="us.jpg" alt="Us together" class="main-img">
 
     <div class="buttons">
       <button id="yesBtn">YES 💕</button>
@@ -100,8 +121,7 @@
     const yesBtn = document.getElementById("yesBtn");
     const buttonsContainer = document.querySelector(".buttons");
 
-    // Move NO button within container
-    noBtn.addEventListener("mouseover", () => {
+    function moveNoButton() {
       const maxX = buttonsContainer.clientWidth - noBtn.offsetWidth;
       const maxY = buttonsContainer.clientHeight - noBtn.offsetHeight;
 
@@ -110,14 +130,26 @@
 
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
+    }
+
+    // Desktop
+    noBtn.addEventListener("mouseenter", moveNoButton);
+
+    // iOS / touch
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
     });
 
-    // YES button action
+    // Backup
+    noBtn.addEventListener("click", moveNoButton);
+
+    // YES button
     yesBtn.addEventListener("click", () => {
       document.body.innerHTML = `
-        <div style="
+        <div class="fade-in" style="
           position: relative;
-          height:100vh;
+          min-height:100svh;
           width:100%;
           display:flex;
           justify-content:center;
@@ -125,22 +157,26 @@
           font-family:'Segoe UI', sans-serif;
           background:linear-gradient(135deg, #ff9a9e, #fad0c4);
           overflow:hidden;
+          padding:20px;
+          box-sizing:border-box;
         ">
 
+          <!-- Background image -->
           <img 
             src="us1.jpg"
             alt="Us background"
             style="
               position:absolute;
-              top:0;
-              left:0;
+              inset:0;
               width:100%;
               height:100%;
-              object-fit:cover;
-              opacity:0.25;
+              object-fit:contain;
+              opacity:0.22;
+              filter: blur(1px);
             "
           >
 
+          <!-- Foreground -->
           <div style="
             position:relative;
             z-index:2;
@@ -148,13 +184,14 @@
             flex-direction:column;
             align-items:center;
             text-align:center;
-            padding:20px;
+            max-width:420px;
+            width:100%;
           ">
             <img 
               src="fireworks.gif"
               alt="Fireworks"
               style="
-                max-width:300px;
+                max-width:260px;
                 width:80%;
                 margin-bottom:20px;
                 border-radius:15px;
